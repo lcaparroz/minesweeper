@@ -4,7 +4,8 @@ RUN npm install --global \
     chai \
     chai-immutable \
     immutable \
-    mocha
+    mocha \
+    random-js
 
 ENV NODE_PATH=/usr/local/lib/node_modules/
 
