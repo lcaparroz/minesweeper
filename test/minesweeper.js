@@ -17,6 +17,20 @@ describe("Minesweeper", function() {
       expect(resultField).to.equal(expectedField);
     });
   });
+
+  describe("populateFieldWithMines()", function() {
+    it("returns a field with the given number of mines", function () {
+      const emptyField = h3w3Field();
+
+      const resultField = minesweeper.populateFieldWithMines(emptyField, 5);
+
+      const noOfMines = resultField
+        .filter(vertice => vertice.get('mine'))
+        .size;
+
+      expect(noOfMines).to.equal(5);
+    });
+  });
 });
 
 function h3w3Field() {

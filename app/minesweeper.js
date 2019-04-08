@@ -1,4 +1,5 @@
 const { List, Map, Range } = require('immutable');
+const { Random } = require('random-js');
 
 exports.generateField = function(height, width) {
   return Range(0, height)
@@ -12,4 +13,13 @@ exports.generateField = function(height, width) {
       },
       Map()
     );
+};
+
+exports.populateFieldWithMines = function(field, noOfMines) {
+  const random = new Random();
+  const mines = List(random.sample(field.keySeq().toArray(), noOfMines));
+
+  return mines.reduce(
+    (field, vertice) => { return field.setIn([vertice, 'mine'], true) }, field
+  );
 };
