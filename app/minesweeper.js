@@ -24,8 +24,9 @@ exports.populateFieldWithMines = function(field, noOfMines) {
   );
 };
 
-exports.adjacentVertices = function(vertice, height, width) {
+exports.adjacentVertices = function(vertice, fieldSize) {
   const [verticeX, verticeY] = vertice;
+  const [height, width] = fieldSize;
 
   return Range(Math.max(0, verticeX - 1), Math.min(width, verticeX + 2))
     .map(x => Range(Math.max(0, verticeY - 1), Math.min(height, verticeY + 2))
