@@ -24,11 +24,13 @@ exports.populateFieldWithMines = function(field, noOfMines) {
   );
 };
 
-exports.adjacentVertices = function(x, y, height, width) {
-  return Range(Math.max(0, x - 1), Math.min(width, x + 2))
-    .map(x => Range(Math.max(0, y - 1), Math.min(height, y + 2))
+exports.adjacentVertices = function(vertice, height, width) {
+  const [verticeX, verticeY] = vertice;
+
+  return Range(Math.max(0, verticeX - 1), Math.min(width, verticeX + 2))
+    .map(x => Range(Math.max(0, verticeY - 1), Math.min(height, verticeY + 2))
       .map(y => List([x, y])))
     .flatten(true)
     .toSet()
-    .delete(List([x, y]))
+    .delete(List(vertice))
 }

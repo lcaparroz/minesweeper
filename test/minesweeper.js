@@ -36,8 +36,7 @@ describe("Minesweeper", function() {
     const tests = [
       {
         position_text: "top-left corner",
-        x: 0,
-        y: 0,
+        vertice: List([0, 0]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -48,8 +47,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "top-right corner",
-        x: 4,
-        y: 0,
+        vertice: List([4, 0]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -60,8 +58,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "bottom-left corner",
-        x: 0,
-        y: 4,
+        vertice: List([0, 4]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -72,8 +69,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "bottom-right corner",
-        x: 4,
-        y: 4,
+        vertice: List([4, 4]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -84,8 +80,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "middle of the top side",
-        x: 2,
-        y: 0,
+        vertice: List([2, 0]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -98,8 +93,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "middle of the bottom side",
-        x: 2,
-        y: 4,
+        vertice: List([2, 4]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -112,8 +106,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "middle of the left side",
-        x: 0,
-        y: 2,
+        vertice: List([0, 2]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -126,8 +119,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "middle of the right side",
-        x: 4,
-        y: 2,
+        vertice: List([4, 2]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -140,8 +132,7 @@ describe("Minesweeper", function() {
       },
       {
         position_text: "middle of the field",
-        x: 2,
-        y: 2,
+        vertice: List([2, 2]),
         height: 5,
         width: 5,
         expected: Set.of(
@@ -161,7 +152,7 @@ describe("Minesweeper", function() {
       context("when the vertice's in the " + test.position_text, function() {
         it("returns " + test.expected.size + " adjacent vertices", function() {
           const resultAdjacent = minesweeper
-            .adjacentVertices(test.x, test.y, test.height, test.width);
+            .adjacentVertices(test.vertice, test.height, test.width);
 
           expect(resultAdjacent).to.equal(test.expected)
         });
