@@ -27,7 +27,7 @@ describe("Minesweeper", function() {
           [ List([2, 2]), emptyVertice() ]
         ]);
 
-        const resultField = minesweeper.generateField(3, 3);
+        const resultField = minesweeper.generateField(List([3, 3]));
 
         expect(resultField).to.equal(expectedField);
       });
@@ -44,7 +44,7 @@ describe("Minesweeper", function() {
           [ List([1, 2]), emptyVertice() ]
         ]);
 
-        const resultField = minesweeper.generateField(3, 2);
+        const resultField = minesweeper.generateField(List([2, 3]));
 
         expect(resultField).to.equal(expectedField);
       });
@@ -61,7 +61,7 @@ describe("Minesweeper", function() {
           [ List([2, 1]), emptyVertice() ]
         ]);
 
-        const resultField = minesweeper.generateField(2, 3);
+        const resultField = minesweeper.generateField(List([3, 2]));
 
         expect(resultField).to.equal(expectedField);
       });
@@ -70,7 +70,7 @@ describe("Minesweeper", function() {
 
   describe("populateFieldWithMines()", function() {
     it("returns a field with the given number of mines", function() {
-      const emptyField = minesweeper.generateField(5, 5);
+      const emptyField = minesweeper.generateField(List([5, 5]));
 
       const resultField = minesweeper.populateFieldWithMines(emptyField, 5);
 

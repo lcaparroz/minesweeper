@@ -1,7 +1,9 @@
 const { List, Map, Range, Set } = require('immutable');
 const { Random } = require('random-js');
 
-exports.generateField = function(height, width) {
+exports.generateField = function(fieldSize) {
+  const [width, height] = fieldSize;
+
   return Range(0, height)
     .map(y => Range(0, width).map(x => List([x, y])))
     .flatten(true)
@@ -26,7 +28,7 @@ exports.populateFieldWithMines = function(field, noOfMines) {
 
 exports.adjacentVertices = function(vertice, fieldSize) {
   const [verticeX, verticeY] = vertice;
-  const [height, width] = fieldSize;
+  const [width, height] = fieldSize;
 
   return Range(Math.max(0, verticeX - 1), Math.min(width, verticeX + 2))
     .map(x => Range(Math.max(0, verticeY - 1), Math.min(height, verticeY + 2))
