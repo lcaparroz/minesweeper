@@ -3,7 +3,7 @@ const { Random } = require('random-js');
 
 exports.generateField = function(height, width) {
   return Range(0, height)
-    .map(x => Range(0, width).map(y => List([x, y])))
+    .map(y => Range(0, width).map(x => List([x, y])))
     .flatten(true)
     .reduce(
       (field, vertice) => {
