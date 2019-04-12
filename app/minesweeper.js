@@ -1,12 +1,20 @@
 const { List, Map, Range, Set } = require('immutable');
 const { Random } = require('random-js');
 
+function generateRectangularFieldVertices(origin, size) {
+  const [originX, originY] = origin;
+  const [width, height] = size;
+
+  return Range(originY, height)
+    .map(y => Range(originX, width)
+      .map(x => List([x, y])))
+    .flatten(true)
+};
+
 exports.generateField = function(fieldSize) {
   const [width, height] = fieldSize;
 
-  return Range(0, height)
-    .map(y => Range(0, width).map(x => List([x, y])))
-    .flatten(true)
+  return generateRectangularFieldVertices(List([0,0]), fieldSize)
     .reduce(
       (field, vertice) => {
         return field.set(
@@ -30,10 +38,8 @@ exports.adjacentVertices = function(vertice, fieldSize) {
   const [verticeX, verticeY] = vertice;
   const [width, height] = fieldSize;
 
-  return Range(Math.max(0, verticeX - 1), Math.min(width, verticeX + 2))
-    .map(x => Range(Math.max(0, verticeY - 1), Math.min(height, verticeY + 2))
-      .map(y => List([x, y])))
-    .flatten(true)
-    .toSet()
-    .delete(List(vertice))
-}
+  return generateRectangularFieldVertices(
+    List([Math.max(0, verticeX - 1), Math.max(0, verticeY - 1)]),
+    List([Math.min(width, verticeX + 2), Math.min(height, verticeY + 2)])
+  ).toSet().delete(List(vertice))
+};
