@@ -1,9 +1,13 @@
 const { List, Map, Range, Set } = require("immutable");
 const { Random } = require("random-js");
 
+function readFieldSize(size) {
+  return List([size.get("width"), size.get("height")]);
+}
+
 function generateRectangularFieldVertices(origin, size) {
   const [originX, originY] = origin;
-  const [width, height] = size;
+  const [width, height] = readFieldSize(size);
 
   return Range(originY, height)
     .map(y => Range(originX, width)
@@ -12,7 +16,9 @@ function generateRectangularFieldVertices(origin, size) {
 }
 
 exports.generateField = function(fieldSize) {
-  return generateRectangularFieldVertices(List([0,0]), fieldSize)
+  const origin = List([0, 0]);
+
+  return generateRectangularFieldVertices(origin, fieldSize)
     .reduce(
       (field, vertice) => {
         return field.set(
@@ -34,7 +40,7 @@ exports.populateFieldWithMines = function(field, noOfMines) {
 
 exports.adjacentVertices = function(vertice, fieldSize) {
   const [verticeX, verticeY] = vertice;
-  const [width, height] = fieldSize;
+  const [width, height] = readFieldSize(fieldSize);
 
   return Set.union([
     Range(Math.max(0, verticeX - 1), Math.min(width, verticeX + 2))

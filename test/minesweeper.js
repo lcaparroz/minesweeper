@@ -27,7 +27,8 @@ describe("Minesweeper", function() {
           [ List([2, 2]), emptyVertice() ]
         ]);
 
-        const resultField = minesweeper.generateField(List([3, 3]));
+        const resultField = minesweeper
+          .generateField(Map({ width: 3, height: 3 }));
 
         expect(resultField).to.equal(expectedField);
       });
@@ -44,7 +45,8 @@ describe("Minesweeper", function() {
           [ List([1, 2]), emptyVertice() ]
         ]);
 
-        const resultField = minesweeper.generateField(List([2, 3]));
+        const resultField = minesweeper
+          .generateField(Map({ width: 2, height: 3 }));
 
         expect(resultField).to.equal(expectedField);
       });
@@ -61,7 +63,8 @@ describe("Minesweeper", function() {
           [ List([2, 1]), emptyVertice() ]
         ]);
 
-        const resultField = minesweeper.generateField(List([3, 2]));
+        const resultField = minesweeper
+          .generateField(Map({ width: 3, height: 2 }));
 
         expect(resultField).to.equal(expectedField);
       });
@@ -70,7 +73,8 @@ describe("Minesweeper", function() {
 
   describe("populateFieldWithMines()", function() {
     it("returns a field with the given number of mines", function() {
-      const emptyField = minesweeper.generateField(List([5, 5]));
+      const emptyField = minesweeper
+        .generateField(Map({ width: 5, height: 5 }));
 
       const resultField = minesweeper.populateFieldWithMines(emptyField, 5);
 
@@ -87,7 +91,7 @@ describe("Minesweeper", function() {
       {
         position_text: "top-left corner",
         vertice: List([0, 0]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([1, 0]),
           List([0, 1])
@@ -96,7 +100,7 @@ describe("Minesweeper", function() {
       {
         position_text: "top-right corner",
         vertice: List([4, 0]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([3, 0]),
           List([4, 1])
@@ -105,7 +109,7 @@ describe("Minesweeper", function() {
       {
         position_text: "bottom-left corner",
         vertice: List([0, 4]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([0, 3]),
           List([1, 4])
@@ -114,7 +118,7 @@ describe("Minesweeper", function() {
       {
         position_text: "bottom-right corner",
         vertice: List([4, 4]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([4, 3]),
           List([3, 4])
@@ -123,7 +127,7 @@ describe("Minesweeper", function() {
       {
         position_text: "middle of the top side",
         vertice: List([2, 0]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([1, 0]),
           List([3, 0]),
@@ -133,7 +137,7 @@ describe("Minesweeper", function() {
       {
         position_text: "middle of the bottom side",
         vertice: List([2, 4]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([2, 3]),
           List([1, 4]),
@@ -143,7 +147,7 @@ describe("Minesweeper", function() {
       {
         position_text: "middle of the left side",
         vertice: List([0, 2]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([0, 1]),
           List([1, 2]),
@@ -153,7 +157,7 @@ describe("Minesweeper", function() {
       {
         position_text: "middle of the right side",
         vertice: List([4, 2]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([4, 1]),
           List([3, 2]),
@@ -163,7 +167,7 @@ describe("Minesweeper", function() {
       {
         position_text: "middle of the field",
         vertice: List([2, 2]),
-        fieldSize: List([5, 5]),
+        fieldSize: Map({ width: 5, height: 5 }),
         expected: Set.of(
           List([2, 1]),
           List([1, 2]),
