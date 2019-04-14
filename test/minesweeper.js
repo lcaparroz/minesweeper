@@ -1,6 +1,6 @@
-const chai = require('chai');
-const chaiImmutable = require('chai-immutable');
-const immutable = require('immutable');
+const chai = require("chai");
+const chaiImmutable = require("chai-immutable");
+const immutable = require("immutable");
 const minesweeper = require ("../app/minesweeper");
 
 chai.use(chaiImmutable);
@@ -10,7 +10,7 @@ const { List, Map, Set } = immutable;
 describe("Minesweeper", function() {
   function emptyVertice() {
     return Map({ mine: false, marked: false, uncovered: false });
-  };
+  }
 
   describe("generateField()", function() {
     context("when the field height is equal to its width", function() {
@@ -75,7 +75,7 @@ describe("Minesweeper", function() {
       const resultField = minesweeper.populateFieldWithMines(emptyField, 5);
 
       const noOfMines = resultField
-        .filter(vertice => vertice.get('mine'))
+        .filter(vertice => vertice.get("mine"))
         .size;
 
       expect(noOfMines).to.equal(5);
@@ -195,7 +195,7 @@ describe("Minesweeper", function() {
           const resultAdjacent = minesweeper
             .adjacentVertices(test.vertice, test.fieldSize);
 
-          expect(resultAdjacent).to.equal(test.expected)
+          expect(resultAdjacent).to.equal(test.expected);
         });
       });
     });
