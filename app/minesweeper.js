@@ -29,12 +29,13 @@ exports.generateField = function(fieldSize) {
     );
 };
 
-exports.populateFieldWithMines = function(field, noOfMines) {
-  const random = new Random();
-  const mines = List(random.sample(field.keySeq().toArray(), noOfMines));
-
+exports.populateFieldWithMines = function(field, mines) {
   return mines.reduce(
-    (field, vertice) => { return field.setIn([vertice, "mine"], true); }, field
+    (field, vertice) => {
+      const path = List([vertice, "mine"]);
+
+      return (field.hasIn(path) && field.setIn(path, true)) || field;
+    }, field
   );
 };
 

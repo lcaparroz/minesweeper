@@ -72,17 +72,60 @@ describe("Minesweeper", function() {
   });
 
   describe("populateFieldWithMines()", function() {
-    it("returns a field with the given number of mines", function() {
-      const emptyField = minesweeper
-        .generateField(Map({ width: 5, height: 5 }));
+    context("when the set of mines has only valid vertices", function() {
+      it("returns a field populated with all mines", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+        const mines = Set([
+          List([0,0]), List([0, 4]), List([4, 0]), List([4, 4]), List([2, 2])
+        ]);
 
-      const resultField = minesweeper.populateFieldWithMines(emptyField, 5);
+        const resultField = minesweeper
+          .populateFieldWithMines(emptyField, mines);
 
-      const noOfMines = resultField
-        .filter(vertice => vertice.get("mine"))
-        .size;
+        const resultMines = resultField
+          .filter(vertice => vertice.get("mine"))
+          .keySeq()
+          .toSet();
 
-      expect(noOfMines).to.equal(5);
+        expect(resultMines).to.equal(mines);
+      });
+    });
+
+    context("when the set of mines has invalid vertices", function() {
+      it("returns a field populated with only valid mines", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+
+        const validMines = Set([ List([0, 4]), List([4, 0]), List([2, 2]) ]);
+        const invalidMines = Set([ List([-1,0]), List([4, 6]) ]);
+
+        const resultField = minesweeper
+          .populateFieldWithMines(
+            emptyField,
+            Set.union([validMines, invalidMines])
+          );
+
+        const resultMines = resultField
+          .filter(vertice => vertice.get("mine"))
+          .keySeq()
+          .toSet();
+
+        expect(resultMines).to.equal(validMines);
+      });
+    });
+
+    context("when the set of mines is empty", function() {
+      it("returns the same field, unaltered", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+        const mines = Set([ ]);
+
+        const resultField = minesweeper
+          .populateFieldWithMines(emptyField, mines);
+
+        expect(resultField).to.equal(emptyField);
+      });
     });
   });
 
