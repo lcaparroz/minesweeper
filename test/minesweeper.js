@@ -90,8 +90,7 @@ describe("Minesweeper", function() {
         fieldSize: List([5, 5]),
         expected: Set.of(
           List([1, 0]),
-          List([0, 1]),
-          List([1, 1])
+          List([0, 1])
         )
       },
       {
@@ -100,7 +99,6 @@ describe("Minesweeper", function() {
         fieldSize: List([5, 5]),
         expected: Set.of(
           List([3, 0]),
-          List([3, 1]),
           List([4, 1])
         )
       },
@@ -110,7 +108,6 @@ describe("Minesweeper", function() {
         fieldSize: List([5, 5]),
         expected: Set.of(
           List([0, 3]),
-          List([1, 3]),
           List([1, 4])
         )
       },
@@ -119,7 +116,6 @@ describe("Minesweeper", function() {
         vertice: List([4, 4]),
         fieldSize: List([5, 5]),
         expected: Set.of(
-          List([3, 3]),
           List([4, 3]),
           List([3, 4])
         )
@@ -131,9 +127,7 @@ describe("Minesweeper", function() {
         expected: Set.of(
           List([1, 0]),
           List([3, 0]),
-          List([1, 1]),
-          List([2, 1]),
-          List([3, 1])
+          List([2, 1])
         )
       },
       {
@@ -141,9 +135,7 @@ describe("Minesweeper", function() {
         vertice: List([2, 4]),
         fieldSize: List([5, 5]),
         expected: Set.of(
-          List([1, 3]),
           List([2, 3]),
-          List([3, 3]),
           List([1, 4]),
           List([3, 4])
         )
@@ -154,10 +146,8 @@ describe("Minesweeper", function() {
         fieldSize: List([5, 5]),
         expected: Set.of(
           List([0, 1]),
-          List([1, 1]),
           List([1, 2]),
-          List([0, 3]),
-          List([1, 3])
+          List([0, 3])
         )
       },
       {
@@ -165,10 +155,8 @@ describe("Minesweeper", function() {
         vertice: List([4, 2]),
         fieldSize: List([5, 5]),
         expected: Set.of(
-          List([3, 1]),
           List([4, 1]),
           List([3, 2]),
-          List([3, 3]),
           List([4, 3])
         )
       },
@@ -177,14 +165,10 @@ describe("Minesweeper", function() {
         vertice: List([2, 2]),
         fieldSize: List([5, 5]),
         expected: Set.of(
-          List([1, 1]),
           List([2, 1]),
-          List([3, 1]),
           List([1, 2]),
           List([3, 2]),
-          List([1, 3]),
-          List([2, 3]),
-          List([3, 3])
+          List([2, 3])
         )
       }
     ];
