@@ -5,7 +5,7 @@ function readFieldSize(size) {
   return List([size.get("width"), size.get("height")]);
 }
 
-function generateRectangularFieldVertices(origin, size) {
+function generateRectangularFieldVertices(size, origin = List([0, 0])) {
   const [originX, originY] = origin;
   const [width, height] = readFieldSize(size);
 
@@ -16,9 +16,7 @@ function generateRectangularFieldVertices(origin, size) {
 }
 
 exports.generateField = function(fieldSize) {
-  const origin = List([0, 0]);
-
-  return generateRectangularFieldVertices(origin, fieldSize)
+  return generateRectangularFieldVertices(fieldSize)
     .reduce(
       (field, vertice) => {
         return field.set(
