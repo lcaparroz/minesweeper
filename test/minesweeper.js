@@ -71,6 +71,43 @@ describe("Minesweeper", function() {
     });
   });
 
+  describe("generateMines()", function() {
+    context("when the requested no. of mines is greater than zero", function() {
+      it("returns a set of vertices with the no. of mines", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+
+        const resultMines = minesweeper.generateMines(emptyField, 5);
+
+        expect(resultMines.size).to.equal(5);
+      });
+
+      it("returns a Set of List elements", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+
+        const resultMines = minesweeper.generateMines(emptyField, 5);
+
+        const isValidSetOfMines = Set.isSet(resultMines) && resultMines
+          .map((mine) => List.isList(mine) && (mine.size == 2))
+          .every((mine) => mine == true);
+
+        expect(isValidSetOfMines).to.be.true;
+      });
+    });
+
+    context("when the no. of mines is zero", function() {
+      it("returns a empty set", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+
+        const resultMines = minesweeper.generateMines(emptyField, 0);
+
+        expect(resultMines).to.equal(Set([ ]));
+      });
+    });
+  });
+
   describe("populateFieldWithMines()", function() {
     context("when the set of mines has only valid vertices", function() {
       it("returns a field populated with all mines", function() {

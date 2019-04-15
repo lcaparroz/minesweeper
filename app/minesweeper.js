@@ -29,6 +29,12 @@ exports.generateField = function(fieldSize) {
     );
 };
 
+exports.generateMines = function(field, noOfMines) {
+  const random = new Random();
+
+  return Set(random.sample(field.keySeq().toArray(), noOfMines));
+};
+
 exports.populateFieldWithMines = function(field, mines) {
   return mines.reduce(
     (field, vertice) => {
