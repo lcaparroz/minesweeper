@@ -15,6 +15,21 @@ function generateRectangularFieldVertices(size, origin = List([0, 0])) {
     .flatten(true);
 }
 
+function isExplorable(vertice) {
+  return !(
+    vertice.get("mine")
+    || vertice.get("marked")
+    || vertice.get("uncovered")
+  );
+}
+
+exports.filterExplorableVertices = function(field, vertices = undefined) {
+  return (vertices || field.keySeq().toSet())
+    .filter(vertice => isExplorable(field.get(vertice)))
+    .keySeq()
+    .toSet();
+};
+
 exports.generateField = function(fieldSize) {
   return generateRectangularFieldVertices(fieldSize)
     .reduce(

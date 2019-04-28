@@ -12,6 +12,142 @@ describe("Minesweeper", function() {
     return Map({ mine: false, marked: false, uncovered: false });
   }
 
+  describe("filterExplorableVertices()", function() {
+    context("when all field's vertices are unexplored", function() {
+      context("and a set of vertices is not specified ", function() {
+        it("returns a set of all vertices in the field", function() {
+          const emptyField = minesweeper
+            .generateField(Map({ width: 3, height: 3 }));
+
+          const expectedVertices = Set([
+            List([0, 0]), List([1, 0]), List([2, 0]),
+            List([0, 1]), List([1, 1]), List([2, 1]),
+            List([0, 2]), List([1, 2]), List([2, 2])
+          ]);
+
+          const resultVertices = minesweeper
+            .filterExplorableVertices(emptyField);
+
+          expect(resultVertices).to.equal(expectedVertices);
+        });
+      });
+
+      context("and a set of vertices is specified", function() {
+        it("retuns the specified set of vertices", function() {
+          const emptyField = minesweeper
+            .generateField(Map({ width: 3, height: 3 }));
+
+          const specifiedVertices = Set([
+            List([0, 0]), List([1, 0]), List([0, 1]), List([1, 1])
+          ]);
+
+          const resultVertices = minesweeper
+            .filterExplorableVertices(emptyField, specifiedVertices);
+
+          expect(resultVertices).to.equal(specifiedVertices);
+        });
+      });
+    });
+
+    context("when all vertices are explored", function() {
+      context("and a set of vertices is not specified ", function() {
+        it("returns a empty set", function() {
+          const emptyField = minesweeper
+            .generateField(Map({ width: 3, height: 3 }));
+
+          const exploredField = emptyField.keySeq()
+            .reduce(
+              (field, vertice) => {
+                const path = List([vertice, "uncovered"]);
+
+                return field.setIn(path, true);
+              }, emptyField
+            );
+
+          const resultVertices = minesweeper
+            .filterExplorableVertices(exploredField);
+
+          expect(resultVertices).to.equal(Set());
+        });
+      });
+
+      context("and a set of vertices is specified", function() {
+        it("returns a empty set", function() {
+          const emptyField = minesweeper
+            .generateField(Map({ width: 3, height: 3 }));
+
+          const exploredField = emptyField.keySeq()
+            .reduce(
+              (field, vertice) => {
+                const path = List([vertice, "uncovered"]);
+
+                return field.setIn(path, true);
+              }, emptyField
+            );
+
+          const specifiedVertices = Set([
+            List([1, 1]), List([2, 1]), List([1, 2]), List([2, 2])
+          ]);
+
+          const resultVertices = minesweeper
+            .filterExplorableVertices(exploredField, specifiedVertices);
+
+          expect(resultVertices).to.equal(Set());
+        });
+      });
+    });
+
+    context("when there are vertices with mines", function() {
+      context("and a set of vertices is not specified ", function() {
+        it("returns a set containing only vertices without mines", function() {
+          const emptyField = minesweeper
+            .generateField(Map({ width: 3, height: 3 }));
+
+          const mines = Set([
+            List([0, 0]), List([2, 0]), List([1, 1]), List([0, 2]), List([2, 2])
+          ]);
+
+          const fieldWithMines = minesweeper
+            .populateFieldWithMines(emptyField, mines);
+
+          const expectedVertices = Set([
+            List([1, 0]), List([0, 1]), List([2, 1]), List([1, 2])
+          ]);
+
+          const resultVertices = minesweeper
+            .filterExplorableVertices(fieldWithMines);
+
+          expect(resultVertices).to.equal(expectedVertices);
+        });
+      });
+
+      context("and a set of vertices is specified", function() {
+        it("returns a subset of the specified vertices wo/ mines", function() {
+          const emptyField = minesweeper
+            .generateField(Map({ width: 3, height: 3 }));
+
+          const mines = Set([
+            List([0, 0]), List([2, 0]), List([1, 1]), List([0, 2]), List([2, 2])
+          ]);
+
+          const fieldWithMines = minesweeper
+            .populateFieldWithMines(emptyField, mines);
+
+          const specifiedVertices = Set([
+            List([0, 1]), List([1, 1]), List([0, 2]), List([1, 2])
+          ]);
+
+          const expectedVertices = Set([ List([0, 1]), List([1, 2]) ]);
+
+          const resultVertices = minesweeper
+            .filterExplorableVertices(fieldWithMines, specifiedVertices);
+
+          expect(resultVertices).to.equal(expectedVertices);
+        });
+      });
+    });
+  });
+
   describe("generateField()", function() {
     context("when the field height is equal to its width", function() {
       it("returns a square field without mines", function() {
