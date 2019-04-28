@@ -23,14 +23,14 @@ function isExplorable(vertice) {
   );
 }
 
-exports.filterExplorableVertices = function(field, vertices = undefined) {
+function filterExplorableVertices(field, vertices = undefined) {
   return (vertices || field.keySeq().toSet())
     .filter(vertice => isExplorable(field.get(vertice)))
     .keySeq()
     .toSet();
-};
+}
 
-exports.generateField = function(fieldSize) {
+function generateField(fieldSize) {
   return generateRectangularFieldVertices(fieldSize)
     .reduce(
       (field, vertice) => {
@@ -40,15 +40,15 @@ exports.generateField = function(fieldSize) {
       },
       Map()
     );
-};
+}
 
-exports.generateMines = function(field, noOfMines) {
+function generateMines(field, noOfMines) {
   const random = new Random();
 
   return Set(random.sample(field.keySeq().toArray(), noOfMines));
-};
+}
 
-exports.populateFieldWithMines = function(field, mines) {
+function populateFieldWithMines(field, mines) {
   return mines.reduce(
     (field, vertice) => {
       const path = List([vertice, "mine"]);
@@ -56,9 +56,9 @@ exports.populateFieldWithMines = function(field, mines) {
       return (field.hasIn(path) && field.setIn(path, true)) || field;
     }, field
   );
-};
+}
 
-exports.adjacentVertices = function(vertice, fieldSize) {
+function adjacentVertices(vertice, fieldSize) {
   const [verticeX, verticeY] = vertice;
   const [width, height] = readFieldSize(fieldSize);
 
@@ -68,4 +68,12 @@ exports.adjacentVertices = function(vertice, fieldSize) {
     Range(Math.max(0, verticeY - 1), Math.min(height, verticeY + 2))
       .map(y => List([verticeX, y])).toSet()
   ]).delete(vertice);
+}
+
+module.exports = {
+  adjacentVertices,
+  filterExplorableVertices,
+  generateField,
+  generateMines,
+  populateFieldWithMines
 };
