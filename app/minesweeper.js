@@ -38,7 +38,7 @@ function generateField(fieldSize) {
           Map({ mine: false, marked: false, uncovered: false })
         );
       },
-      Map({ vertices: Map() })
+      Map({ vertices: Map(), size: fieldSize })
     );
 }
 

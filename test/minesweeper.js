@@ -166,7 +166,8 @@ describe("Minesweeper", function() {
             [ List([2, 0]), emptyVertice() ],
             [ List([2, 1]), emptyVertice() ],
             [ List([2, 2]), emptyVertice() ]
-          ])
+          ]),
+          size: Map({ width: 3, height: 3 })
         });
 
         const resultField = minesweeper
@@ -186,7 +187,8 @@ describe("Minesweeper", function() {
             [ List([1, 0]), emptyVertice() ],
             [ List([1, 1]), emptyVertice() ],
             [ List([1, 2]), emptyVertice() ]
-          ])
+          ]),
+          size: Map({ width: 2, height: 3 })
         });
 
         const resultField = minesweeper
@@ -206,7 +208,8 @@ describe("Minesweeper", function() {
             [ List([1, 1]), emptyVertice() ],
             [ List([2, 0]), emptyVertice() ],
             [ List([2, 1]), emptyVertice() ]
-          ])
+          ]),
+          size: Map({ width: 3, height: 2 })
         });
 
         const resultField = minesweeper
