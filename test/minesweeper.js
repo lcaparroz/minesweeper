@@ -55,10 +55,12 @@ describe("Minesweeper", function() {
           const emptyField = minesweeper
             .generateField(Map({ width: 3, height: 3 }));
 
-          const exploredField = emptyField.keySeq()
+          const exploredField = emptyField
+            .get("vertices")
+            .keySeq()
             .reduce(
               (field, vertice) => {
-                const path = List([vertice, "uncovered"]);
+                const path = List(["vertices", vertice, "uncovered"]);
 
                 return field.setIn(path, true);
               }, emptyField
@@ -76,10 +78,12 @@ describe("Minesweeper", function() {
           const emptyField = minesweeper
             .generateField(Map({ width: 3, height: 3 }));
 
-          const exploredField = emptyField.keySeq()
+          const exploredField = emptyField
+            .get("vertices")
+            .keySeq()
             .reduce(
               (field, vertice) => {
-                const path = List([vertice, "uncovered"]);
+                const path = List(["vertices", vertice, "uncovered"]);
 
                 return field.setIn(path, true);
               }, emptyField
@@ -151,17 +155,19 @@ describe("Minesweeper", function() {
   describe("generateField()", function() {
     context("when the field height is equal to its width", function() {
       it("returns a square field without mines", function() {
-        const expectedField = Map([
-          [ List([0, 0]), emptyVertice() ],
-          [ List([0, 1]), emptyVertice() ],
-          [ List([0, 2]), emptyVertice() ],
-          [ List([1, 0]), emptyVertice() ],
-          [ List([1, 1]), emptyVertice() ],
-          [ List([1, 2]), emptyVertice() ],
-          [ List([2, 0]), emptyVertice() ],
-          [ List([2, 1]), emptyVertice() ],
-          [ List([2, 2]), emptyVertice() ]
-        ]);
+        const expectedField = Map({
+          vertices: Map([
+            [ List([0, 0]), emptyVertice() ],
+            [ List([0, 1]), emptyVertice() ],
+            [ List([0, 2]), emptyVertice() ],
+            [ List([1, 0]), emptyVertice() ],
+            [ List([1, 1]), emptyVertice() ],
+            [ List([1, 2]), emptyVertice() ],
+            [ List([2, 0]), emptyVertice() ],
+            [ List([2, 1]), emptyVertice() ],
+            [ List([2, 2]), emptyVertice() ]
+          ])
+        });
 
         const resultField = minesweeper
           .generateField(Map({ width: 3, height: 3 }));
@@ -172,14 +178,16 @@ describe("Minesweeper", function() {
 
     context("when the field height is greater than its width", function() {
       it("returns a vertical rectangular field without mines", function() {
-        const expectedField = Map([
-          [ List([0, 0]), emptyVertice() ],
-          [ List([0, 1]), emptyVertice() ],
-          [ List([0, 2]), emptyVertice() ],
-          [ List([1, 0]), emptyVertice() ],
-          [ List([1, 1]), emptyVertice() ],
-          [ List([1, 2]), emptyVertice() ]
-        ]);
+        const expectedField = Map({
+          vertices: Map([
+            [ List([0, 0]), emptyVertice() ],
+            [ List([0, 1]), emptyVertice() ],
+            [ List([0, 2]), emptyVertice() ],
+            [ List([1, 0]), emptyVertice() ],
+            [ List([1, 1]), emptyVertice() ],
+            [ List([1, 2]), emptyVertice() ]
+          ])
+        });
 
         const resultField = minesweeper
           .generateField(Map({ width: 2, height: 3 }));
@@ -190,14 +198,16 @@ describe("Minesweeper", function() {
 
     context("when the field width is greater than its height", function() {
       it("returns a horizontal rectangular field without mines", function() {
-        const expectedField = Map([
-          [ List([0, 0]), emptyVertice() ],
-          [ List([0, 1]), emptyVertice() ],
-          [ List([1, 0]), emptyVertice() ],
-          [ List([1, 1]), emptyVertice() ],
-          [ List([2, 0]), emptyVertice() ],
-          [ List([2, 1]), emptyVertice() ]
-        ]);
+        const expectedField = Map({
+          vertices: Map([
+            [ List([0, 0]), emptyVertice() ],
+            [ List([0, 1]), emptyVertice() ],
+            [ List([1, 0]), emptyVertice() ],
+            [ List([1, 1]), emptyVertice() ],
+            [ List([2, 0]), emptyVertice() ],
+            [ List([2, 1]), emptyVertice() ]
+          ])
+        });
 
         const resultField = minesweeper
           .generateField(Map({ width: 3, height: 2 }));
@@ -257,6 +267,7 @@ describe("Minesweeper", function() {
           .populateFieldWithMines(emptyField, mines);
 
         const resultMines = resultField
+          .get("vertices")
           .filter(vertice => vertice.get("mine"))
           .keySeq()
           .toSet();
@@ -280,6 +291,7 @@ describe("Minesweeper", function() {
           );
 
         const resultMines = resultField
+          .get("vertices")
           .filter(vertice => vertice.get("mine"))
           .keySeq()
           .toSet();

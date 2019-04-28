@@ -24,9 +24,8 @@ function isExplorable(vertice) {
 }
 
 function filterExplorableVertices(field, vertices = undefined) {
-  return (vertices || field.keySeq().toSet())
-    .filter(vertice => isExplorable(field.get(vertice)))
-    .keySeq()
+  return (vertices || field.get("vertices").keySeq().toSet())
+    .filter(vertice => isExplorable(field.getIn(["vertices", vertice])))
     .toSet();
 }
 
@@ -34,24 +33,27 @@ function generateField(fieldSize) {
   return generateRectangularFieldVertices(fieldSize)
     .reduce(
       (field, vertice) => {
-        return field.set(
-          vertice, Map({ mine: false, marked: false, uncovered: false })
+        return field.setIn(
+          ["vertices", vertice],
+          Map({ mine: false, marked: false, uncovered: false })
         );
       },
-      Map()
+      Map({ vertices: Map() })
     );
 }
 
 function generateMines(field, noOfMines) {
   const random = new Random();
 
-  return Set(random.sample(field.keySeq().toArray(), noOfMines));
+  return Set(
+    random.sample(field.get("vertices").keySeq().toArray(), noOfMines)
+  );
 }
 
 function populateFieldWithMines(field, mines) {
   return mines.reduce(
     (field, vertice) => {
-      const path = List([vertice, "mine"]);
+      const path = List(["vertices", vertice, "mine"]);
 
       return (field.hasIn(path) && field.setIn(path, true)) || field;
     }, field
