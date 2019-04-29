@@ -411,8 +411,11 @@ describe("Minesweeper", function() {
     tests.forEach(function(test) {
       context("when the vertice's in the " + test.position_text, function() {
         it("returns " + test.expected.size + " adjacent vertices", function() {
+          const emptyField = minesweeper
+            .generateField(test.fieldSize);
+
           const resultAdjacent = minesweeper
-            .adjacentVertices(test.vertice, test.fieldSize);
+            .adjacentVertices(emptyField, test.vertice);
 
           expect(resultAdjacent).to.equal(test.expected);
         });

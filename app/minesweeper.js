@@ -60,9 +60,9 @@ function populateFieldWithMines(field, mines) {
   );
 }
 
-function adjacentVertices(vertice, fieldSize) {
+function adjacentVertices(field, vertice) {
   const [verticeX, verticeY] = vertice;
-  const [width, height] = readFieldSize(fieldSize);
+  const [width, height] = readFieldSize(field.get("size"));
 
   return Set.union([
     Range(Math.max(0, verticeX - 1), Math.min(width, verticeX + 2))
