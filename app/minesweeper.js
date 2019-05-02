@@ -19,7 +19,7 @@ function isExplorable(vertice) {
   return !(
     vertice.get("mine")
     || vertice.get("marked")
-    || vertice.get("uncovered")
+    || vertice.get("explored")
   );
 }
 
@@ -35,7 +35,7 @@ function generateField(fieldSize) {
       (field, vertice) => {
         return field.setIn(
           ["vertices", vertice],
-          Map({ mine: false, marked: false, uncovered: false })
+          Map({ mine: false, marked: false, explored: false })
         );
       },
       Map({ vertices: Map(), size: fieldSize })
@@ -72,10 +72,29 @@ function adjacentVertices(field, vertice) {
   ]).delete(vertice);
 }
 
+function navigation(field, verticeQueue) {
+  if (verticeQueue.isEmpty()) return field;
+
+  const vertice = verticeQueue.first();
+  const updatedField = field.setIn(["vertices", vertice, "explored"], true);
+  const updatedVerticeQueue = verticeQueue.concat(
+    filterExplorableVertices(
+      updatedField, adjacentVertices(updatedField, vertice)
+    )
+  ).delete(vertice);
+
+  return navigation(updatedField, updatedVerticeQueue);
+}
+
+function exploreField(field, initialVertice) {
+  return navigation(field, Set([initialVertice]));
+}
+
 module.exports = {
   adjacentVertices,
   filterExplorableVertices,
   generateField,
   generateMines,
+  exploreField,
   populateFieldWithMines
 };

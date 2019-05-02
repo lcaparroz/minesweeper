@@ -9,7 +9,7 @@ const { List, Map, Set } = immutable;
 
 describe("Minesweeper", function() {
   function emptyVertice() {
-    return Map({ mine: false, marked: false, uncovered: false });
+    return Map({ mine: false, marked: false, explored: false });
   }
 
   describe("filterExplorableVertices()", function() {
@@ -60,7 +60,7 @@ describe("Minesweeper", function() {
             .keySeq()
             .reduce(
               (field, vertice) => {
-                const path = List(["vertices", vertice, "uncovered"]);
+                const path = List(["vertices", vertice, "explored"]);
 
                 return field.setIn(path, true);
               }, emptyField
@@ -83,7 +83,7 @@ describe("Minesweeper", function() {
             .keySeq()
             .reduce(
               (field, vertice) => {
-                const path = List(["vertices", vertice, "uncovered"]);
+                const path = List(["vertices", vertice, "explored"]);
 
                 return field.setIn(path, true);
               }, emptyField
@@ -419,6 +419,68 @@ describe("Minesweeper", function() {
 
           expect(resultAdjacent).to.equal(test.expected);
         });
+      });
+    });
+  });
+
+  describe("exploreField()", function() {
+    context("when the field has no mines (empty field)", function() {
+      it("explore every single vertice", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 3, height: 3 }));
+
+        const resultField = minesweeper.exploreField(emptyField, List([0, 0]));
+
+        expect(
+          resultField
+            .get("vertices")
+            .every(vertice => vertice.get("explored"))
+        ).to.equal(true);
+      });
+    });
+
+    context("when the field has row of mines in the middle", function() {
+      it("explore only part of the field", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 3, height: 3 }));
+        const mines = Set([ List([0, 1]), List([1, 1]), List([2, 1]) ]);
+        const fieldWithMines = minesweeper
+          .populateFieldWithMines(emptyField, mines);
+
+        const resultVertices = minesweeper
+          .exploreField(fieldWithMines, List([2, 0]))
+          .get("vertices")
+          .filter(vertice => vertice.get("explored"))
+          .keySeq()
+          .toSet();
+
+        expect(resultVertices).to.equal(
+          Set([ List([0, 0]), List([1, 0]), List([2, 0]) ])
+        );
+      });
+    });
+
+    context("when a vertice is surrounded by vertices", function() {
+      it("explore only the given vertice", function() {
+        const emptyField = minesweeper
+          .generateField(Map({ width: 5, height: 5 }));
+        const mines = Set([
+          List([1, 1]), List([1, 2]), List([1, 3]),
+          List([2, 1]), List([2, 3]),
+          List([3, 1]), List([3, 2]), List([3, 3]),
+        ]);
+        const fieldWithMines = minesweeper
+          .populateFieldWithMines(emptyField, mines);
+
+        const resultVertices = minesweeper
+          .exploreField(fieldWithMines, List([2, 2]))
+          .get("vertices")
+          .filter(vertice => vertice.get("explored"))
+          .keySeq()
+          .toSet();
+
+        expect(resultVertices).to.equal(Set([ List([2, 2]) ])
+        );
       });
     });
   });
