@@ -1,14 +1,9 @@
-FROM node:8
+FROM node:10
 
-RUN npm install --global \
-    chai \
-    chai-immutable \
-    immutable \
-    mocha \
-    random-js
+ADD ./package.json ./yarn.lock /tmp/
+RUN cd /tmp && yarn
+RUN mkdir -p /usr/src/app && cd /usr/src/app && ln -s /tmp/node_modules
 
-ENV NODE_PATH=/usr/local/lib/node_modules/
+COPY . /usr/src/app
 
-COPY . /app
-
-WORKDIR /app
+WORKDIR /usr/src/app

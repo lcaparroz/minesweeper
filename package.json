@@ -1,0 +1,38 @@
+{
+  "name": "minesweeper",
+  "version": "0.0.1",
+  "description": "Minesweeper game in JavaScript/HTML",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "immutable": "4.0.0-rc.12",
+    "random-js": "2.0.0"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "chai-immutable": "2.1.0",
+    "eslint": "^5.16.0",
+    "mocha": "6.1.4"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcaparroz/minesweeper.git"
+  },
+  "keywords": [
+    "minesweeper",
+    "game",
+    "js",
+    "html"
+  ],
+  "author": "Luis Caparroz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lcaparroz/minesweeper/issues"
+  },
+  "homepage": "https://github.com/lcaparroz/minesweeper#readme"
+}
